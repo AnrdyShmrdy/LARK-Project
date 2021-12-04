@@ -21,6 +21,8 @@ declare -A file_map #pseudo-2D array to hold value and location of each char in 
 no_lines=0
 no_cols=0
 line_no=1
+is_end=0
+fon=0
 function setArrayContents(){
 #x=line number
 #y=column/character number
@@ -77,70 +79,7 @@ done
 done
 echo
 }
-
-function movement(){
-while true; do
-        read -p "Move? " movement
-        case $movement in
-        "left" | "l")
-	player_x2=$(( player_x-1 ))
-	fon=${file_map[$player_y,$player_x2]}
-	if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-	echo "Ouch"
-	else
-	clear
-	player_x=$(( player_x -1 ))
-	displayFileMap
-	fi
-        ;;
-        "right" | "r")
-	player_x2=$(( player_x+1 ))
-        fon=${file_map[$player_y,$player_x2]}
-        if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-	echo "Ouch"
-        else
-	clear
-        player_x=$player_x2
-        displayFileMap
-        fi
-        ;;
-        "up" | "u")
-        player_y2=$(( player_y-1 ))
-        fon=${file_map[$player_y2,$player_x]}
-        if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-	echo "Ouch"
-        else
-	clear
-        player_y=$player_y2
-        displayFileMap
-        fi
-        ;;
-        "down" | "d")
-        player_y2=$(( player_y+1 ))
-        fon=${file_map[$player_y2,$player_x]}
-        if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-	echo "Ouch!"
-        else
-	clear
-        player_y=$player_y2
-        displayFileMap
-        fi
-        ;;
-	"rest")
-	echo 'Remember! Use ./level1.sh to come back to the maze!'
-	echo "$player_x	$player_y">.resume.txt
-	break
-	;;
-	"reset")
-	echo 'temporary'
-	rm .resume.txt
-	;;
-        *) echo "You Failed!"
-        ;;
-        esac
-	#C - character, N - note
-	fon=${file_map[$player_y,$player_x]}
-	if [[ "$fon" == "N" ]]; then
+function ifFonEqualN(){
 		echo "
 You found a note with the password!
 Try using the rest command so you can use the cat command on the password object.
@@ -148,8 +87,9 @@ For example, you can try typing
 cat password
 "
 		cp .password password
-	elif [[ "$fon" == "C" ]]; then
-	read -p "
+}
+function ifFonEqualC(){
+read -p "
 
                    		    __
     				   /  \\
@@ -168,20 +108,128 @@ cat password
 			player_y=$(( player_y-1 ))
 			displayFileMap
 		fi
-
+}
+function ifFonEqualE(){
+	cp -r ../.Level2 ../Level2
+	cat ./pawnNote1
+	rm .resume.txt
+	mv ./password ./.password
+}
+function checkChar(){
+	#C - character, N - note
+	if [[ "$fon" == "N" ]]; then
+		ifFonEqualN
+	elif [[ "$fon" == "C" ]]; then
+		ifFonEqualC
 	elif [[ "$fon" == "E" ]]; then
-		cp -r ../.Level2 ../Level2
-		cat ./pawnNote1
-		rm .resume.txt
-		mv ./password ./.password
-		break
+		ifFonEqualE
+		is_end=1
 	fi
+}
+function moveLeft(){
+player_x2=$(( player_x-1 ))
+	fon=${file_map[$player_y,$player_x2]}
+	if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
+	echo "Ouch"
+	else
+	clear
+	player_x=$(( player_x -1 ))
+	displayFileMap
+	fi
+}
+function moveRight(){
+	player_x2=$(( player_x+1 ))
+        fon=${file_map[$player_y,$player_x2]}
+        if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
+	echo "Ouch"
+        else
+	clear
+        player_x=$player_x2
+        displayFileMap
+        fi
+}
+function moveUp(){
+ player_y2=$(( player_y-1 ))
+        fon=${file_map[$player_y2,$player_x]}
+        if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
+	echo "Ouch"
+        else
+	clear
+        player_y=$player_y2
+        displayFileMap
+        fi
+}
+function moveDown(){
+        player_y2=$(( player_y+1 ))
+        fon=${file_map[$player_y2,$player_x]}
+        if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
+	echo "Ouch!"
+        else
+	clear
+        player_y=$player_y2
+        displayFileMap
+        fi
+}
+function rest(){
+	echo 'Remember! Use ./level1.sh to come back to the maze!'
+	echo "$player_x	$player_y">.resume.txt
+	is_end=1
+}
+function reset(){
+echo 'temporary'
+rm .resume.txt
+}
+function move(){
+is_moving=1
+while [[ $is_moving==1 ]]; do
+	read -p "What direction? " -n 1 movement
+			case $movement in
+				"a")
+				moveLeft
+				;;
+				"d")
+				moveRight
+				;;
+				"w")
+				moveUp
+				;;
+				"s")
+				moveDown
+				;;
+				"x")
+				echo
+				is_moving=0
+				break
+				;;
+				*) 
+				echo "You Failed!"
+				;;
+			esac
+		fon=${file_map[$player_y,$player_x]}
+		checkChar
+done
+}
+function whatAction(){
+while [[ $is_end == 0 ]]; do
+	read -p "What Action? " action
+		if [[ "$action" == "rest" ]]; then
+			rest
+		elif [[ "$action" == "reset" ]]; then
+			reset
+		elif [[ "$action" == "move" ]]; then
+			move
+		fi
+done
+}
+function runGame(){
+while [[ $is_end == 0 ]]; do
+	whatAction
 done
 }
 
 function main(){ #an emulation of how the main function like that of C/C++ works. I will run everything in this
 setArrayContents
 displayFileMap
-movement
+runGame
 }
 main
