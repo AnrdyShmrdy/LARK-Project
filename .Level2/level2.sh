@@ -127,7 +127,7 @@ while true; do
         fi
         ;;
 	"rest")
-	echo 'Remember! Use ./level1.sh to come back to the maze!'
+	echo 'Remember! Use ./level2.sh to come back to the maze!'
 	echo "$player_x	$player_y">.resume.txt
 	break
 	;;
@@ -141,13 +141,7 @@ while true; do
 	#C - character, N - note
 	fon=${file_map[$player_y,$player_x]}
 	if [[ "$fon" == "N" ]]; then
-		echo "
-You found a note with the password!
-Try using the rest command so you can use the cat command on the password object.
-For example, you can try typing    
-cat password
-"
-		cp .password password
+		echo "suss"
 	elif [[ "$fon" == "C" ]]; then
 	read -p "
 
