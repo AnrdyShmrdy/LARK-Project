@@ -173,6 +173,7 @@ function moveDown(){
 function rest(){
 	echo 'Remember! Use ./level1.sh to come back to the maze!'
 	echo "$player_x	$player_y">.resume.txt
+
 	is_end=1
 }
 function reset(){
@@ -224,6 +225,58 @@ done
 function runGame(){
 while [[ $is_end == 0 ]]; do
 	whatAction
+	break
+	;;
+	"reset")
+	echo 'temporary'
+	rm .resume.txt
+	;;
+        *) echo "You Failed!"
+        ;;
+        esac
+	#C - character, N - note
+	fon=${file_map[$player_y,$player_x]}
+	if [[ "$fon" == "N" ]]; then
+		echo "
+You found a note with the password!
+Try using the rest command so you can use the cat command on the password object.
+For example, you can try typing    
+
+rest
+
+then type
+
+cat password
+"
+		cp .password password
+	elif [[ "$fon" == "C" ]]; then
+	read -p "
+
+                   		    __
+    				   /  \\
+   				  ( @ @)
+				   \\ o/
+ 				    >< 
+   				   |  |
+  				  /    \\
+				 |______|
+
+Pawn Gang lacky: Password please: " ans
+
+		if [[ "$ans" == "Please" ]] || [[ "$ans" == "please" ]]; then
+			echo "Correct!"
+		else
+			player_y=$(( player_y-1 ))
+			displayFileMap
+		fi
+
+	elif [[ "$fon" == "E" ]]; then
+		cp -r ../.Level2 ../Level2
+		cat ./pawnNote1.txt
+		rm .resume.txt
+		mv ./password ./.password
+		break
+	fi
 done
 }
 
