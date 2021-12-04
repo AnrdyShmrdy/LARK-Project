@@ -14,7 +14,7 @@
 #then
 #file_input=.testmap
 #else
-file_input=Level1Map #file that is being passed to shell script as an argument
+file_input=Level2Map #file that is being passed to shell script as an argument
 #fi
 
 declare -A file_map #pseudo-2D array to hold value and location of each char in file
@@ -141,38 +141,23 @@ while true; do
 	#C - character, N - note
 	fon=${file_map[$player_y,$player_x]}
 	if [[ "$fon" == "N" ]]; then
-		echo "suss"
+		echo "Can't expect every note to be useful"
 	elif [[ "$fon" == "C" ]]; then
-	read -p "
-
-                   		    __
-    				   /  \\
-   				  ( - -)
-				   \\ ^/
- 				    >< 
-   				   |  |
-  				  /    \\
-				 |______|
-
-\"Password please: \"" ans
-
-		if [[ "$ans" == "Please" ]] || [[ "$ans" == "please" ]]; then
-			echo "Correct!"
+		if test -f "Apple"; then
+			cat ./.noblePawnChat2
 		else
-			player_y=$(( player_y-1 ))
-			displayFileMap
+			cat ./.noblePawnChat1
+			player_x=$(( player_x-1 ))
 		fi
 
 	elif [[ "$fon" == "E" ]]; then
-		cp -r ../.Level2 ../Level2
-		cat ./pawnNote1
-		rm .resume.txt
-		mv ./password ./.password
+		cp -r ../.Level3 ../Level3
 		break
 	fi
 done
 }
 
+#npc.txt
 function main(){ #an emulation of how the main function like that of C/C++ works. I will run everything in this
 setArrayContents
 displayFileMap

@@ -1,0 +1,15 @@
+
+You are a one-dimensional character that is trapped in a two-dimensional world.  Fortunately, in this world you have found a note that says:
+
+		__
+	       /  \
+	      (    )
+	       \  /
+		><
+	       |  |
+	      /    \
+	     /      \
+	    |________|
+	 __/	      \__
+	/		 \\
+
