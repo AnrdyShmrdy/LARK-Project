@@ -145,6 +145,11 @@ while true; do
 You found a note with the password!
 Try using the rest command so you can use the cat command on the password object.
 For example, you can try typing    
+
+rest
+
+then type
+
 cat password
 "
 		cp .password password
@@ -153,14 +158,14 @@ cat password
 
                    		    __
     				   /  \\
-   				  ( - -)
-				   \\ ^/
+   				  ( @ @)
+				   \\ o/
  				    >< 
    				   |  |
   				  /    \\
 				 |______|
 
-\"Password please: \"" ans
+Pawn Gang lacky: Password please: " ans
 
 		if [[ "$ans" == "Please" ]] || [[ "$ans" == "please" ]]; then
 			echo "Correct!"
@@ -171,7 +176,7 @@ cat password
 
 	elif [[ "$fon" == "E" ]]; then
 		cp -r ../.Level2 ../Level2
-		cat ./pawnNote1
+		cat ./pawnNote1.txt
 		rm .resume.txt
 		mv ./password ./.password
 		break

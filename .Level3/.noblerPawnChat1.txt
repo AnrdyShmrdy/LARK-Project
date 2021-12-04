@@ -1,0 +1,21 @@
+                                    __
+                                  _/__\_
+                                   /  \
+                                  ( ^ ^)
+                                   \ v/
+                                    >< 
+                                   |  |
+                                  /    \
+                                 |______|
+
+The Nobler Pawn: I will bestow upon you the power to move objects to other levels/directories by using the command mv.
+I desire for you to now use your powers of creation to create a Pawn and then send that Pawn to meet The Noble Pawn that you met in Level1. Once you take a rest you should say
+
+touch Pawn
+
+Then, you should say
+
+mv pawn ../Level1 
+
+Once you have completed this task, I shall let you pass…
+
