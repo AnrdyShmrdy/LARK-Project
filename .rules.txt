@@ -1,0 +1,49 @@
+
+You are one-dimensional character that is trapped in a two-dimensional world. Fortunately, in this world you have found a note that says:
+                      __
+                     /  \
+                    (    )
+                     \  /
+                      ><
+                     |  | 
+                    /    \ 
+                   /      \
+                  |________|
+               __/          \__
+              /  //  |++|  \\  \\
+             |  ||   |/\|  ||   |
+             |  ||   |\/|  ||   |
+              \  \\  |**|  //  /
+   ____________|==============|_______________
+  | We know the suffering you have faced being|
+  | trapped in a two-dimensional world while  |                                     
+  | being only a measly one-dimensional being.|
+  | Therefore, if you can traverse to the end |
+  | of our mazes to find us, we will grant    |
+  | transform you into a two-dimensional      |
+  | being.                                    |
+  |                                           |
+  |                                           |
+  |                                           |
+  |                                           |
+  |                                           |
+  |                                           |
+  |                                           |
+  |___________________________________________|
+
+This note has made everything clear to you that all your sorrows can be cured if you complete this quest presented to you through this mysterious note.
+
+You must change the directory to Level1 by using the cd command. For example, enter "cd Level1", then use the command "./level1.sh" to start the maze. 
+To travel though these mazes, you must enter the commands "l” to move left, “r” to move right, “u” to move up, and “d” to move down. Then, press enter to travers through the mazes.
+
+On the maze there will be different symbols to represent what is located in the maze. 
+The letter "P" represents the player.
+The letter "C" represents a character that you can interact with.
+The letter "N" represents a note that you can interact with.
+The Letter "E" represents the exit to the maze."
+
+If you get tired when you are in the maze type "rest" to take a break"
+
+As you traverse through these mazes there will most certainly be new skills that you will learn that will help you complete you quest.
+
+

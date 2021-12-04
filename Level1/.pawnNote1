@@ -1,0 +1,32 @@
+#!/bin/bash
+echo "
+                      __
+                     /  \\
+                    (    )
+                     \\  /
+                      ><
+                     |  | 
+                    /    \\ 
+                   /      \\
+                  |________|
+               __/          \__
+              /  //  |++|  \\\\  \\
+             |  ||   |/\|  ||   |
+             |  ||   |\/|  ||   |
+              \\  \\\\  |**|  //  /
+   ____________|==============|_______________
+  |                                           |
+  |Now that you have completed our first maze,|                                     
+  |we shall give you the ability to travel    |
+  |between our mazes use the command ’cd’ to  |
+  |travel to the next level, which is located |
+  |in a directory called ”Level2” for example |
+  |type ”cd Level2” to go to the next level.  |
+  |                                           |
+  |                                           |
+  |___________________________________________|
+
+"
+
+
+
