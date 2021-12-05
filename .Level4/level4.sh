@@ -14,7 +14,7 @@
 #then
 #file_input=.testmap
 #else
-file_input=Level1Map #file that is being passed to shell script as an argument
+file_input=Level4Map #file that is being passed to shell script as an argument
 #fi
 
 declare -A file_map #pseudo-2D array to hold value and location of each char in file
@@ -80,45 +80,26 @@ done
 echo
 }
 function ifFonEqualN(){
-		echo "
-You found a note with the password!
-Try using the rest command so you can use the cat command on the password object.
-For example, you can try typing    
-
-rest
-
-then type
-
-cat password
-"
-		cp .password password
+cat ./.level3Note
+}
+function noblerPawn() {
+	cat ./.
 }
 function ifFonEqualC(){
-read -p "
-
-                   		    __
-    				   /  \\
-   				  ( @ @)
-				   \\ o/
- 				    >< 
-   				   |  |
-  				  /    \\
-				 |______|
-
-Pawn Gang lacky: Password please: " ans
-
-		if [[ "$ans" == "Please" ]] || [[ "$ans" == "please" ]]; then
-			echo "Correct!"
-		else
-			player_y=$(( player_y-1 ))
-			displayFileMap
-		fi
+	cat .pawnGangChat1.txt
+	read response
+	if [[ $response == "whyAreWeStillHere"  ]]; then
+		cat .pawnGangChat2.txt	
+		echo
+		echo "answer: "
+	else
+		echo "I'm sorry that's not correct"
+		player_y=$(( player_y-1 ))	
+	fi
 }
 function ifFonEqualE(){
-	cp -r ../.Level2 ../Level2
-	./.pawnNote1
+	cat .congratulations.txt	
 	rm .resume.txt
-	mv ./password ./.password
 	is_end=1
 	break
 }

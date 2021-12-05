@@ -7,11 +7,4 @@
                                   /    \
                                  |______|
 
-Pawn Chan: Thank you so much for finding that note! Could you show me your moves by using this new command call cp? I want you to use the cp command to copy the note’s information on to this long pillar.
-
-After you take a well-deserved rest say
-
-cp pawnChansNote ./Pillar/pawnChansNote
-
-Then, please come back to me baka!
-
+Pawn Chan: You did it!! Thank you so much!! You may now pass. Now I can always admire this picture of The Noble Pawn that you placed onto this pillar! 

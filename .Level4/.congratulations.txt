@@ -1,0 +1,46 @@
+
+                            CONGRATULATIONS!!!
+
+                                    __
+                                   /  \
+                                  (    )
+                                   \  /
+                                    >< 
+                                   |  |
+                                  /    \
+                                 |______|
+
+???: Congratulations on completing all our mazes. The Pawn Gang shall grant you the ability to become a two-dimensional character.
+
+
+   *     *    *        *           *           *     *      *     *   
+*                  *       *          *           *             *
+      *     *                   *          *             *           *
+   *     *    *        *           *           *     *      *     *   
+*                  *       *          *           *             *
+      *     *                   *          *             *           *
+   *     *    *        *                       *     *      *     *   
+*                  *                              *             *
+      *     *                              *             *           *
+   *     *    *                ___                *     *      *     *   
+*                  *          |..|                  *             *
+      *     *                 |__|             *             *           
+*                             /||\
+   *     *    *              / || \              *     *      *     *   
+*                  *           /\                   *             *
+      *     *                 /  \           *             *           *
+   *     *    *                                 *     *      *     *   
+*                  *                              *             *
+      *     *                              *             *           *
+   *     *    *        *           *           *     *      *     *   
+*                  *       *          *           *             *
+      *     *                   *          *             *           *
+   *     *    *        *           *           *     *      *     *   
+*                  *       *          *           *             *
+      *     *                   *          *             *           *
+
+???: One last parting gift from the Pawn Gang. You could have become a two-dimensional character from the start of the game if you added the -a command combined with the ls command. For example, you could have typed the commands at the beginning of the game in this order:
+ls -a ..
+cd ../.Level4
+ls -a
+cat .congratulations.txt

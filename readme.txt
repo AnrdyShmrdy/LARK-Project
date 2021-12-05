@@ -11,7 +11,7 @@ You are one-dimensional character that is trapped in a two-dimensional world. Fo
 
 items learned:
 ls
-ls -la
+ls -a
 cat
 cd
 touch
