@@ -15,7 +15,7 @@ touch Pawn
 
 Then, you should say
 
-mv pawn ../Level2 
+mv Pawn ../Level2 
 
 Once you have completed this task, I shall let you pass…
 

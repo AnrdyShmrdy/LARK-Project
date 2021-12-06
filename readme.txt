@@ -1,4 +1,7 @@
-The Quest for an Extra Dimension
+Welcome to LARK
+>>>>>>>the Linux Activity to Reinforce Knowledge
+
+One-Dimensional Maze-Runner
 
 Made by:
 Andrew Ponce
