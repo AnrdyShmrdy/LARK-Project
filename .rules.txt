@@ -51,9 +51,9 @@ For example, to get started try typing and entering these commands in this order
 cd Level1
 ./level.sh
 move
-r
-r
 d
+s
+w
 x
 rest
 

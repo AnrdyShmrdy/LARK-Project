@@ -10,12 +10,7 @@
 #NOTE: I don't know why, but you have to have a blank line at the end of the file for this all to work
 #My guess is that it has something to do with the IFS= read -r line statement in the while loop
 
-#if [ $1 -eq 1 ]
-#then
-#file_input=.testmap
-#else
-file_input=Level1Map #file that is being passed to shell script as an argument
-#fi
+file_input=Level1Map
 
 declare -A file_map #pseudo-2D array to hold value and location of each char in file
 no_lines=0
@@ -64,6 +59,7 @@ player_y=2
 fi
 
 function displayFileMap(){
+clear
 for (( i=1; i<no_lines; i++ ));
 do
 echo
@@ -109,18 +105,30 @@ Pawn Gang lacky: Password please: " ans
 
 		if [[ "$ans" == "Please" ]] || [[ "$ans" == "please" ]]; then
 			echo "Correct!"
+			sleep 1
+			moveDown
 		else
-			player_y=$(( player_y-1 ))
-			displayFileMap
+			echo "Wrongo!"
+			sleep 1
+			moveUp
 		fi
 }
 function ifFonEqualE(){
 	cp -r ../.Level2 ../Level2
 	./.pawnNote1
+	if [ -f ".resume.txt" ] 
+	then
+		rm .resume.txt
+		echo 'removed .resume.txt'
+	fi
 	rm .resume.txt
 	mv ./password ./.password
 	is_end=1
-	break
+}
+function bumpIntoWall(){
+echo "Ouch!"
+sleep 0.4
+clear
 }
 function checkChar(){
 	#C - character, N - note
@@ -134,62 +142,62 @@ function checkChar(){
 	fi
 }
 function moveLeft(){
+clear
 player_x2=$(( player_x-1 ))
 	fon=${file_map[$player_y,$player_x2]}
 	if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-	echo "Ouch"
+	bumpIntoWall
 	else
-	clear
 	player_x=$(( player_x -1 ))
-	displayFileMap
 	fi
 }
 function moveRight(){
+clear
 	player_x2=$(( player_x+1 ))
         fon=${file_map[$player_y,$player_x2]}
         if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-	echo "Ouch"
+		bumpIntoWall
         else
-	clear
         player_x=$player_x2
-        displayFileMap
         fi
 }
 function moveUp(){
+clear
  player_y2=$(( player_y-1 ))
         fon=${file_map[$player_y2,$player_x]}
         if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-	echo "Ouch"
+		bumpIntoWall
         else
-	clear
         player_y=$player_y2
-        displayFileMap
         fi
 }
 function moveDown(){
+clear
         player_y2=$(( player_y+1 ))
         fon=${file_map[$player_y2,$player_x]}
         if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-	echo "Ouch!"
+		bumpIntoWall
         else
-	clear
         player_y=$player_y2
-        displayFileMap
         fi
 }
 function rest(){
 	echo 'Remember! Use ./level1.sh to come back to the maze!'
 	echo "$player_x	$player_y">.resume.txt
-
 	is_end=1
 }
 function reset(){
-echo 'temporary'
-rm .resume.txt
+if [ -f ".resume.txt" ] 
+then
+  rm .resume.txt
+  echo 'removed .resume.txt'
+fi
+is_end=1
 }
 function move(){
 is_moving=1
 while [[ $is_moving==1 ]]; do
+	displayFileMap
 	read -p "What direction? " -n 1 movement
 			case $movement in
 				"a")
@@ -217,8 +225,9 @@ while [[ $is_moving==1 ]]; do
 		checkChar
 done
 }
-function whatAction(){
+function runGame(){
 while [[ $is_end == 0 ]]; do
+	displayFileMap
 	read -p "What Action? " action
 		if [[ "$action" == "rest" ]]; then
 			rest
@@ -229,15 +238,9 @@ while [[ $is_end == 0 ]]; do
 		fi
 done
 }
-function runGame(){
-while [[ $is_end == 0 ]]; do
-	whatAction
-done
-}
 
 function main(){ #an emulation of how the main function like that of C/C++ works. I will run everything in this
 setArrayContents
-displayFileMap
 runGame
 }
 main

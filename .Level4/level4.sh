@@ -80,7 +80,8 @@ done
 echo
 }
 function ifFonEqualN(){
-cat ./.level3Note
+cat ./.secretMessage.txt
+cp .secretMessage.txt secretMessage.txt
 }
 function noblerPawn() {
 	cat ./.
