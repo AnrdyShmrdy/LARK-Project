@@ -88,6 +88,7 @@ then type
 cat password
 "
 		cp .password password
+read -n 1 -s -r -p "Press any key to continue"
 }
 function ifFonEqualC(){
 read -p "
@@ -105,11 +106,10 @@ Pawn Gang lacky: Password please: " ans
 
 		if [[ "$ans" == "Please" ]] || [[ "$ans" == "please" ]]; then
 			echo "Correct!"
-			sleep 1
-			moveDown
+			read -n 1 -s -r -p "Press any key to continue"
 		else
 			echo "Wrongo!"
-			sleep 1
+			read -n 1 -s -r -p "Press any key to continue"
 			moveUp
 		fi
 }
@@ -121,8 +121,10 @@ function ifFonEqualE(){
 		rm .resume.txt
 		echo 'removed .resume.txt'
 	fi
-	rm .resume.txt
-	mv ./password ./.password
+	if [ -f "password" ]
+	then
+		mv password .password
+	fi
 	is_end=1
 }
 function bumpIntoWall(){
@@ -130,34 +132,19 @@ echo "Ouch!"
 sleep 0.4
 clear
 }
-function checkChar(){
-	#C - character, N - note
-	if [[ "$fon" == "N" ]]; then
-		ifFonEqualN
-	elif [[ "$fon" == "C" ]]; then
-		ifFonEqualC
-	elif [[ "$fon" == "E" ]]; then
-		ifFonEqualE
-		is_end=1
-	fi
-}
 function moveLeft(){
 clear
 player_x2=$(( player_x-1 ))
 	fon=${file_map[$player_y,$player_x2]}
-	if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-	bumpIntoWall
-	else
-	player_x=$(( player_x -1 ))
+	if [[ "$fon" != "|" ]] && [[ "$fon" != "X" ]]; then
+	player_x=$player_x2
 	fi
 }
 function moveRight(){
 clear
 	player_x2=$(( player_x+1 ))
         fon=${file_map[$player_y,$player_x2]}
-        if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-		bumpIntoWall
-        else
+		if [[ "$fon" != "|" ]] && [[ "$fon" != "X" ]]; then
         player_x=$player_x2
         fi
 }
@@ -165,9 +152,7 @@ function moveUp(){
 clear
  player_y2=$(( player_y-1 ))
         fon=${file_map[$player_y2,$player_x]}
-        if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-		bumpIntoWall
-        else
+		if [[ "$fon" != "|" ]] && [[ "$fon" != "X" ]]; then
         player_y=$player_y2
         fi
 }
@@ -175,9 +160,7 @@ function moveDown(){
 clear
         player_y2=$(( player_y+1 ))
         fon=${file_map[$player_y2,$player_x]}
-        if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-		bumpIntoWall
-        else
+		if [[ "$fon" != "|" ]] && [[ "$fon" != "X" ]]; then
         player_y=$player_y2
         fi
 }
@@ -222,7 +205,15 @@ while [[ $is_moving==1 ]]; do
 				;;
 			esac
 		fon=${file_map[$player_y,$player_x]}
-		checkChar
+			#C - character, N - note
+	if [[ "$fon" == "N" ]]; then
+		ifFonEqualN
+	elif [[ "$fon" == "C" ]]; then
+		ifFonEqualC
+	elif [[ "$fon" == "E" ]]; then
+		ifFonEqualE
+		break;
+	fi
 done
 }
 function runGame(){

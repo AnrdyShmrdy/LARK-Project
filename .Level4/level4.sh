@@ -10,12 +10,8 @@
 #NOTE: I don't know why, but you have to have a blank line at the end of the file for this all to work
 #My guess is that it has something to do with the IFS= read -r line statement in the while loop
 
-#if [ $1 -eq 1 ]
-#then
-#file_input=.testmap
-#else
 file_input=Level4Map #file that is being passed to shell script as an argument
-#fi
+
 
 declare -A file_map #pseudo-2D array to hold value and location of each char in file
 no_lines=0
@@ -64,6 +60,7 @@ player_y=2
 fi
 
 function displayFileMap(){
+clear
 for (( i=1; i<no_lines; i++ ));
 do
 echo
@@ -82,9 +79,11 @@ echo
 function ifFonEqualN(){
 cat ./.secretMessage.txt
 cp .secretMessage.txt secretMessage.txt
+read -n 1 -s -r -p "Press any key to continue"
 }
 function noblerPawn() {
 	cat ./.
+	read -n 1 -s -r -p "Press any key to continue"
 }
 function ifFonEqualC(){
 	cat .pawnGangChat1.txt
@@ -97,66 +96,47 @@ function ifFonEqualC(){
 		echo "I'm sorry that's not correct"
 		player_y=$(( player_y-1 ))	
 	fi
+	read -n 1 -s -r -p "Press any key to continue"
 }
 function ifFonEqualE(){
 	cat .congratulations.txt	
-	rm .resume.txt
+	if [ -f ".resume.txt" ] 
+	then
+		rm .resume.txt
+	fi
 	is_end=1
 	break
 }
-function checkChar(){
-	#C - character, N - note
-	if [[ "$fon" == "N" ]]; then
-		ifFonEqualN
-	elif [[ "$fon" == "C" ]]; then
-		ifFonEqualC
-	elif [[ "$fon" == "E" ]]; then
-		ifFonEqualE
-		is_end=1
-	fi
-}
 function moveLeft(){
+clear
 player_x2=$(( player_x-1 ))
 	fon=${file_map[$player_y,$player_x2]}
-	if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-	echo "Ouch"
-	else
-	clear
-	player_x=$(( player_x -1 ))
-	displayFileMap
+	if [[ "$fon" != "|" ]] && [[ "$fon" != "X" ]]; then
+	player_x=$player_x2
 	fi
 }
 function moveRight(){
+clear
 	player_x2=$(( player_x+1 ))
         fon=${file_map[$player_y,$player_x2]}
-        if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-	echo "Ouch"
-        else
-	clear
+		if [[ "$fon" != "|" ]] && [[ "$fon" != "X" ]]; then
         player_x=$player_x2
-        displayFileMap
         fi
 }
 function moveUp(){
+clear
  player_y2=$(( player_y-1 ))
         fon=${file_map[$player_y2,$player_x]}
-        if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-	echo "Ouch"
-        else
-	clear
+		if [[ "$fon" != "|" ]] && [[ "$fon" != "X" ]]; then
         player_y=$player_y2
-        displayFileMap
         fi
 }
 function moveDown(){
+clear
         player_y2=$(( player_y+1 ))
         fon=${file_map[$player_y2,$player_x]}
-        if [[ "$fon" == "|" ]] || [[ "$fon" == "X" ]]; then
-	echo "Ouch!"
-        else
-	clear
+		if [[ "$fon" != "|" ]] && [[ "$fon" != "X" ]]; then
         player_y=$player_y2
-        displayFileMap
         fi
 }
 function rest(){
@@ -166,12 +146,17 @@ function rest(){
 	is_end=1
 }
 function reset(){
-echo 'temporary'
-rm .resume.txt
+if [ -f ".resume.txt" ] 
+then
+  rm .resume.txt
+  echo 'removed .resume.txt'
+fi
+is_end=1
 }
 function move(){
 is_moving=1
 while [[ $is_moving==1 ]]; do
+	displayFileMap
 	read -p "What direction? " -n 1 movement
 			case $movement in
 				"a")
@@ -196,11 +181,20 @@ while [[ $is_moving==1 ]]; do
 				;;
 			esac
 		fon=${file_map[$player_y,$player_x]}
-		checkChar
+			#C - character, N - note
+	if [[ "$fon" == "N" ]]; then
+		ifFonEqualN
+	elif [[ "$fon" == "C" ]]; then
+		ifFonEqualC
+	elif [[ "$fon" == "E" ]]; then
+		ifFonEqualE
+		break;
+	fi
 done
 }
-function whatAction(){
+function runGame(){
 while [[ $is_end == 0 ]]; do
+	displayFileMap
 	read -p "What Action? " action
 		if [[ "$action" == "rest" ]]; then
 			rest
@@ -211,15 +205,9 @@ while [[ $is_end == 0 ]]; do
 		fi
 done
 }
-function runGame(){
-while [[ $is_end == 0 ]]; do
-	whatAction
-done
-}
 
 function main(){ #an emulation of how the main function like that of C/C++ works. I will run everything in this
 setArrayContents
-displayFileMap
 runGame
 }
 main
