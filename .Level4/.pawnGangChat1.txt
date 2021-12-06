@@ -1,0 +1,16 @@
+                                    __
+                                   /  \
+                                  (    )
+                                   \  /
+                                    >< 
+                                   |  |
+                                  /    \
+                                 |______|
+
+???: I see, so you have made it this far. If you wish for me to grant you your wish to become a two-dimensional character, then you must complete one last task. You must find a note hidden in this maze and decipher the hidden password. 
+Fine… I shall give you two gifts to help make your life easier. The first gift is a hint that the password is directly next to the comment
+thePawnGangKnows: 
+The second gift I shall give you is the command grep. This command will allow you to look for keywords in the note. For example, when you find the note and stop to rest you should type
+cat secretMessage.txt | grep thePawnGangKnows:
+If you still cannot solve this puzzle, then, I do not know what will help you.
+

@@ -10,7 +10,12 @@
 #NOTE: I don't know why, but you have to have a blank line at the end of the file for this all to work
 #My guess is that it has something to do with the IFS= read -r line statement in the while loop
 
-file_input=Level1Map
+#if [ $1 -eq 1 ]
+#then
+#file_input=.testmap
+#else
+file_input=Level3Map #file that is being passed to shell script as an argument
+#fi
 
 declare -A file_map #pseudo-2D array to hold value and location of each char in file
 no_lines=0
@@ -76,61 +81,51 @@ done
 echo
 }
 function ifFonEqualN(){
-		echo "
-You found a note with the password!
-Try using the rest command so you can use the cat command on the password object.
-For example, you can try typing    
-
-rest
-
-then type
-
-cat password
-"
-		cp .password password
+cat ./.level3Note.txt
+cp ./.level3Note.txt ./pawnChansNote
 read -n 1 -s -r -p "Press any key to continue"
 }
+function noblerPawn() {
+	FILENAME="../Level2/Pawn"
+	if [ -f "$FILENAME" ]; then
+		cat ./.noblerPawnChat2.txt
+		read -n 1 -s -r -p "Press any key to continue"
+	else
+		cat ./.noblerPawnChat1.txt
+		player_y=$(( player_y-1 ))
+		read -n 1 -s -r -p "Press any key to continue"
+	fi
+}
+function pawnChan(){
+	if [ -f "./Pillar/pawnChansNote"  ];then
+		cat .pawnChanChat3.txt
+		read -n 1 -s -r -p "Press any key to continue"
+	elif [ -f "pawnChansNote"  ]; then
+		mv .Pillar Pillar
+		cat .pawnChanChat2.txt
+		player_y=$(( player_y-1 ))
+		read -n 1 -s -r -p "Press any key to continue"
+	else
+		cat .pawnChanChat1.txt
+		player_y=$(( player_y-1 ))
+		read -n 1 -s -r -p "Press any key to continue"
+	fi
+}
 function ifFonEqualC(){
-read -p "
-
-                   		    __
-    				   /  \\
-   				  ( @ @)
-				   \\ o/
- 				    >< 
-   				   |  |
-  				  /    \\
-				 |______|
-
-Pawn Gang lacky: Password please: " ans
-
-		if [[ "$ans" == "Please" ]] || [[ "$ans" == "please" ]]; then
-			echo "Correct!"
-			read -n 1 -s -r -p "Press any key to continue"
-		else
-			echo "Wrongo!"
-			read -n 1 -s -r -p "Press any key to continue"
-			moveUp
-		fi
+	if [ $player_x -eq 35 ]; then
+		noblerPawn
+	else
+		pawnChan
+	fi
 }
 function ifFonEqualE(){
-	cp -r ../.Level2 ../Level2
-	./.pawnNote1
+	cp -r ../.Level4 ../Level4
+	cat .pawnNote3.txt
 	if [ -f ".resume.txt" ] 
 	then
 		rm .resume.txt
-		echo 'removed .resume.txt'
-	fi
-	if [ -f "password" ]
-	then
-		mv password .password
 	fi
 	is_end=1
-}
-function bumpIntoWall(){
-echo "Ouch!"
-sleep 0.4
-clear
 }
 function moveLeft(){
 clear
@@ -167,6 +162,7 @@ clear
 function rest(){
 	echo 'Remember! Use ./level1.sh to come back to the maze!'
 	echo "$player_x	$player_y">.resume.txt
+
 	is_end=1
 }
 function reset(){
@@ -235,3 +231,4 @@ setArrayContents
 runGame
 }
 main
+

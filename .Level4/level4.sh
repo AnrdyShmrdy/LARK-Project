@@ -10,7 +10,8 @@
 #NOTE: I don't know why, but you have to have a blank line at the end of the file for this all to work
 #My guess is that it has something to do with the IFS= read -r line statement in the while loop
 
-file_input=Level1Map
+file_input=Level4Map #file that is being passed to shell script as an argument
+
 
 declare -A file_map #pseudo-2D array to hold value and location of each char in file
 no_lines=0
@@ -76,61 +77,35 @@ done
 echo
 }
 function ifFonEqualN(){
-		echo "
-You found a note with the password!
-Try using the rest command so you can use the cat command on the password object.
-For example, you can try typing    
-
-rest
-
-then type
-
-cat password
-"
-		cp .password password
+cat ./.secretMessage.txt
+cp .secretMessage.txt secretMessage.txt
 read -n 1 -s -r -p "Press any key to continue"
 }
+function noblerPawn() {
+	cat ./.
+	read -n 1 -s -r -p "Press any key to continue"
+}
 function ifFonEqualC(){
-read -p "
-
-                   		    __
-    				   /  \\
-   				  ( @ @)
-				   \\ o/
- 				    >< 
-   				   |  |
-  				  /    \\
-				 |______|
-
-Pawn Gang lacky: Password please: " ans
-
-		if [[ "$ans" == "Please" ]] || [[ "$ans" == "please" ]]; then
-			echo "Correct!"
-			read -n 1 -s -r -p "Press any key to continue"
-		else
-			echo "Wrongo!"
-			read -n 1 -s -r -p "Press any key to continue"
-			moveUp
-		fi
+	cat .pawnGangChat1.txt
+	read response
+	if [[ $response == "whyAreWeStillHere"  ]]; then
+		cat .pawnGangChat2.txt	
+		echo
+		echo "answer: "
+	else
+		echo "I'm sorry that's not correct"
+		player_y=$(( player_y-1 ))	
+	fi
+	read -n 1 -s -r -p "Press any key to continue"
 }
 function ifFonEqualE(){
-	cp -r ../.Level2 ../Level2
-	./.pawnNote1
+	cat .congratulations.txt	
 	if [ -f ".resume.txt" ] 
 	then
 		rm .resume.txt
-		echo 'removed .resume.txt'
-	fi
-	if [ -f "password" ]
-	then
-		mv password .password
 	fi
 	is_end=1
-}
-function bumpIntoWall(){
-echo "Ouch!"
-sleep 0.4
-clear
+	break
 }
 function moveLeft(){
 clear
@@ -167,6 +142,7 @@ clear
 function rest(){
 	echo 'Remember! Use ./level1.sh to come back to the maze!'
 	echo "$player_x	$player_y">.resume.txt
+
 	is_end=1
 }
 function reset(){

@@ -21,7 +21,7 @@ echo "
   |between our mazes use the command ’cd’ to  |
   |travel to the next level, which is located |
   |in a directory called ”Level2” for example |
-  |type ”cd Level2” to go to the next level.  |
+  |type ”cd ../Level2” to go to the next level|
   |                                           |
   |                                           |
   |___________________________________________|
